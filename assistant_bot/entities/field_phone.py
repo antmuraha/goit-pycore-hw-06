@@ -1,4 +1,5 @@
 
+import re
 from assistant_bot.entities.field import Field
 
 
@@ -8,7 +9,8 @@ class FieldPhone(Field):
     '''
 
     def validation(self, value: str) -> str:
-        if len(value) != 10:
+        regPhone = r"\d{10}"
+        if type(value) != str or not re.fullmatch(regPhone, value):
             raise FieldPhoneValueError
 
         return value
