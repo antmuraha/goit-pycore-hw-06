@@ -8,20 +8,18 @@ class AddressBook(UserDict):
     '''
 
     def __init__(self):
-        self.data = {"records": []}
+        self.data = {}
 
     def __str__(self):
-        count = len(self.data["records"])
+        count = len(self.data)
         return f"Address Book with {count} records"
 
     def add_record(self, record: Record):
-        self.data["records"].append(record)
+        self.data[record.name.value] = record
 
     def find(self, name: str) -> Record | None:
-        record = next(
-            (x for x in self.data["records"] if x.name.value == name), None)
-        return record
+        return self.data[name]
 
-    def delete(self, name: str) -> Record | None:
-        self.data["records"] = list(
-            filter(lambda item: item.name.value != name, self.data["records"]))
+    def delete(self, name: str):
+        removed_value = self.data.pop(name)
+        return removed_value
